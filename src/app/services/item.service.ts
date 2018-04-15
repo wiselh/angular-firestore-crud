@@ -9,8 +9,11 @@ export class ItemService {
   itemsCollection: AngularFirestoreCollection<Item>;
   items: Observable<Item[]>;
 
+
   constructor(public _db: AngularFirestore) {
     // this.items = _db.collection('items').valueChanges();
+    this.itemsCollection = _db.collection('items', ref => ref.orderBy('title', 'asc'));
+
     this.items = _db.collection('items').snapshotChanges().map(actions => {
       return actions.map(a => {
         const data = a.payload.doc.data() as Item;
@@ -23,4 +26,12 @@ export class ItemService {
    getItems() {
     return this.items;
    }
+
+   addItem(item: Item) {
+    this.itemsCollection.add(item);
+   }
+
+
+
+
 }
