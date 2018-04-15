@@ -9,6 +9,7 @@ export class ItemService {
   itemsCollection: AngularFirestoreCollection<Item>;
   items: Observable<Item[]>;
 
+  itemDoc: AngularFirestoreDocument<Item>;
 
   constructor(public _db: AngularFirestore) {
     // this.items = _db.collection('items').valueChanges();
@@ -31,7 +32,10 @@ export class ItemService {
     this.itemsCollection.add(item);
    }
 
-
+  deleteItem(item: Item) {
+    this.itemDoc = this._db.doc(`/items/${item.id}`);
+    this.itemDoc.delete();
+  }
 
 
 }

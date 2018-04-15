@@ -18,6 +18,8 @@ export class ItemsComponent implements OnInit {
     });
   }
 
-
+  deteleItem(event, item) {
+    this.itemService.deleteItem(item);
+  }
 
 }
